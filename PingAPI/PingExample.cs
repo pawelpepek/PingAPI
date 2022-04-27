@@ -1,4 +1,5 @@
-﻿using System.Net.NetworkInformation;
+﻿using System;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -32,9 +33,11 @@ namespace PingAPI
 
             pingSender.SendAsync(_who, timeout, buffer, options, waiter);
 
+            var random=new Random();
+
             while (_message == string.Empty)
             {
-                await Task.Delay(100);
+                await Task.Delay(random.Next(10,100));
             }
             return _message;
         }
