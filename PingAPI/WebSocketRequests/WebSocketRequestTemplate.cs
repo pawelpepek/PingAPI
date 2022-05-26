@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using PingAPI.Services;
 using System.Net.WebSockets;
 using System.Threading.Tasks;
 
@@ -7,12 +8,12 @@ namespace PingAPI.WebSocketRequests
     public abstract class WebSocketRequestTemplate : IWebSocketRequest
     {
         protected readonly HttpContext _context;
-        protected readonly AppContext _appContext;
+        protected readonly IMySingletonService _mySingleton;
 
-        public WebSocketRequestTemplate(HttpContext context, AppContext appContext)
+        public WebSocketRequestTemplate(HttpContext context, IMySingletonService mySingleton)
         {
             _context = context;
-            _appContext = appContext;
+            _mySingleton = mySingleton;
         }
         protected abstract Task Run(WebSocket webSocket);
         public async Task Create()

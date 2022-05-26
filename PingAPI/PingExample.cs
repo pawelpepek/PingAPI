@@ -38,6 +38,7 @@ namespace PingAPI
             while (_message == string.Empty)
             {
                 await Task.Delay(random.Next(10,100));
+                await Task.Delay(1000);
             }
             return _message;
         }
