@@ -6,16 +6,9 @@ namespace PingAPI.WebSocketRequests
     {
         public IWebSocketRequest Get(HttpContext context)
         {
-            if (context.Request.Path.ToString().StartsWith("/logout/"))
-            {
-                return new LogoutWebSocketRequest(context);
-            }
-
-            return context.Request.Path.ToString() switch
-            {
-                "/listen" => new ListenWebSocketRequest(context),
-                _ => new BadWebSocketRequest(context),
-            };
+            return context.Request.Path.ToString().StartsWith("/listen")
+                ? new ListenWebSocketRequest(context)
+                : new BadWebSocketRequest(context);
         }
     }
 }

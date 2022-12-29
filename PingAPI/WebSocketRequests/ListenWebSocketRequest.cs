@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using PingAPI.Pings;
-using PingAPI.Services;
 using System;
 using System.Net.WebSockets;
 using System.Text;
@@ -14,18 +13,10 @@ namespace PingAPI.WebSocketRequests
 
         protected override async Task Run(WebSocket webSocket)
         {
-            var token = await SendToken(webSocket);
-
-            while (_appService.IsLogged(token))
+            while (webSocket.State== WebSocketState.Open)
             {
                 await SendPingTest(webSocket);
             }
-        }
-        private async Task<string> SendToken(WebSocket webSocket)
-        {
-            var token = _appService.Login();
-            await SendMessage(webSocket, $"token:{token}");
-            return token;
         }
 
         private static async Task SendPingTest(WebSocket webSocket)

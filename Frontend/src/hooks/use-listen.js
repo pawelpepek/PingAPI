@@ -1,30 +1,31 @@
 import { useState, useEffect } from "react"
-import { socketClose } from "./socketClose"
 
 const useListen = () => {
-	const [token, setToken] = useState("")
-
+	const [running, setRunning] = useState(false)
 	const [listenClient, setListeClient] = useState()
-
 	const [data, setData] = useState([])
 
 	const onLoginHandler = () => {
-		setListeClient(new WebSocket("ws://localhost:5000/listen"))
+		const socket = new WebSocket("ws://localhost:5000/listen")
+		setListeClient(socket)
+		setRunning(true)
+	}
+
+	const onClose = () => {
+		if (!!listenClient && listenClient.OPEN) {
+			listenClient.close()
+			setRunning(false)
+		}
 	}
 
 	useEffect(() => {
 		if (listenClient !== undefined) {
 			listenClient.onmessage = async message => {
 				const text = await message.data.text()
-				if (text.startsWith("token:")) {
-					setToken(text.substring(6))
-				} else {
-					setData(last => [text, ...last].slice(0, 5))
-				}
+				setData(last => [text, ...last].slice(0, 5))
 			}
 			listenClient.onclose = () => {
-				socketClose(token)
-				setToken("")
+				setRunning(false)
 			}
 			listenClient.onerror = err => {
 				console.log("Błąd ", err)
@@ -32,7 +33,7 @@ const useListen = () => {
 		}
 	}, [listenClient])
 
-	return [token, data, onLoginHandler]
+	return [running, data, onLoginHandler, onClose]
 }
 
 export default useListen
