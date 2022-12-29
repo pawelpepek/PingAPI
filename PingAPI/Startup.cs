@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PingAPI.WebSocketRequests;
 using System;
+using System.Threading.Tasks;
 
 namespace PingAPI
 {
@@ -33,7 +34,8 @@ namespace PingAPI
             app.Use(async (context, next) =>
             {
                 await new WebSocketRequestFactory().Get(context, _appContext).Create();
-            }); ;
+                await next(context);
+            });
         }
     }
 }
