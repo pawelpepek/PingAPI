@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
+using PingAPI.Pings;
+using PingAPI.Services;
 using System;
 using System.Net.WebSockets;
 using System.Text;
@@ -8,7 +10,7 @@ namespace PingAPI.WebSocketRequests
 {
     public class ListenWebSocketRequest : WebSocketRequestTemplate
     {
-        public ListenWebSocketRequest(HttpContext context, IAppContext appContext) : base(context, appContext)
+        public ListenWebSocketRequest(HttpContext context, IAppService appContext) : base(context, appContext)
         {
         }
 

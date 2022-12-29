@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
+using PingAPI.Services;
 
 namespace PingAPI.WebSocketRequests
 {
     public class WebSocketRequestFactory
     {
-        public IWebSocketRequest Get(HttpContext context, IAppContext appContext)
+        public IWebSocketRequest Get(HttpContext context, IAppService appContext)
         {
             switch (context.Request.Path)
             {

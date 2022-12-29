@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace PingAPI
+namespace PingAPI.Pings
 {
     public class PingExample
     {
@@ -33,11 +33,11 @@ namespace PingAPI
 
             pingSender.SendAsync(_who, timeout, buffer, options, waiter);
 
-            var random=new Random();
+            var random = new Random();
 
             while (_message == string.Empty)
             {
-                await Task.Delay(random.Next(10,100));
+                await Task.Delay(random.Next(10, 100));
             }
             return _message;
         }
