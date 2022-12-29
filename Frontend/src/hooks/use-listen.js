@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react"
+import { socketClose } from "./socketClose"
 
 const useListen = () => {
-	const [login, setLogin] = useState(false)
+	const [token, setToken] = useState("")
 
 	const [listenClient, setListeClient] = useState()
 
@@ -13,24 +14,25 @@ const useListen = () => {
 
 	useEffect(() => {
 		if (listenClient !== undefined) {
-			listenClient.onopen = () => {
-				setLogin(true)
-			}
 			listenClient.onmessage = async message => {
 				const text = await message.data.text()
-
-				setData(last => [text, ...last].slice(0, 5))
+				if (text.startsWith("token:")) {
+					setToken(text.substring(6))
+				} else {
+					setData(last => [text, ...last].slice(0, 5))
+				}
 			}
 			listenClient.onclose = () => {
-				setLogin(false)
+				socketClose(token)
+				setToken("")
 			}
-			listenClient.onerror=err=>{
-				console.log("Błąd ",err)
+			listenClient.onerror = err => {
+				console.log("Błąd ", err)
 			}
 		}
 	}, [listenClient])
 
-	return [login, data, onLoginHandler]
+	return [token, data, onLoginHandler]
 }
 
 export default useListen

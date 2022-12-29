@@ -1,21 +1,21 @@
 ﻿using Microsoft.AspNetCore.Http;
-using PingAPI.Services;
 
 namespace PingAPI.WebSocketRequests
 {
     public class WebSocketRequestFactory
     {
-        public IWebSocketRequest Get(HttpContext context, IAppService appContext)
+        public IWebSocketRequest Get(HttpContext context)
         {
-            switch (context.Request.Path)
+            if (context.Request.Path.ToString().StartsWith("/logout/"))
             {
-                case "/listen":
-                    return new ListenWebSocketRequest(context, appContext);
-                case "/logout":
-                    return new LogoutWebSocketRequest(context, appContext);
-                default:
-                    return new BadWebSocketRequest(context);
+                return new LogoutWebSocketRequest(context);
             }
+
+            return context.Request.Path.ToString() switch
+            {
+                "/listen" => new ListenWebSocketRequest(context),
+                _ => new BadWebSocketRequest(context),
+            };
         }
     }
 }

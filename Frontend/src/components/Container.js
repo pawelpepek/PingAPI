@@ -6,12 +6,12 @@ import LoginButton from "./LoginButton"
 import classes from "./Container.module.css"
 
 function Container() {
-	const [login, data, onStart] = useListen()
-	useClose()
+	const [token, data, onStart] = useListen()
+	useClose(token)
 
 	return (
 		<div className={classes.container}>
-			<LoginButton onStart={onStart} login={login} />
+			<LoginButton onStart={onStart} token={token} />
 			<DataList data={data} />
 		</div>
 	)

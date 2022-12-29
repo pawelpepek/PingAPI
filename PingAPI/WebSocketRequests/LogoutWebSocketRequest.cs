@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using PingAPI.Services;
 using System.Net.WebSockets;
 using System.Threading.Tasks;
 
@@ -7,14 +6,17 @@ namespace PingAPI.WebSocketRequests
 {
     public class LogoutWebSocketRequest : WebSocketRequestTemplate
     {
-        public LogoutWebSocketRequest(HttpContext context, IAppService appContext) : base(context, appContext)
-        {
-        }
-
+        public LogoutWebSocketRequest(HttpContext context) : base(context) { }
         protected override async Task Run(WebSocket webSocket)
         {
-            _appContext.Login = false;
-            await Task.Run(() => { });
+            var splittedPath = _context.Request.Path.ToString().Split("/");
+            if (splittedPath.Length > 2)
+            {
+                var token = splittedPath[2];
+                _appService.Logout(token);
+
+                await Task.Run(() => { });
+            }
         }
     }
 }

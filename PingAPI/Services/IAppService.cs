@@ -2,6 +2,8 @@
 {
     public interface IAppService
     {
-        bool Login { get; set; }
+        bool IsLogged(string token);
+        void Logout(string token);
+        string Login();
     }
 }

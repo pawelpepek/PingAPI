@@ -12,10 +12,8 @@ namespace PingAPI.Pings
 
         private string _message = "";
 
-        public PingExample()
-        {
+        public PingExample(){}
 
-        }
         public async Task<string> RunPing()
         {
             var waiter = new AutoResetEvent(false);

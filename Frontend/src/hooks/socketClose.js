@@ -1,3 +1,3 @@
-export const socketClose = () => {
-	new WebSocket("ws://localhost:5000/logout")
+export const socketClose = (token) => {
+	new WebSocket("ws://localhost:5000/logout/"+token)
 }

@@ -1,12 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PingAPI.Services;
 using PingAPI.WebSocketRequests;
 using System;
-using System.Threading.Tasks;
 
 namespace PingAPI
 {
@@ -34,8 +32,7 @@ namespace PingAPI
             app.UseWebSockets(wsOptions);
             app.Use(async (context, next) =>
             {
-                var appContext = context.RequestServices.GetService<IAppService>();
-                await new WebSocketRequestFactory().Get(context, appContext).Create();
+                await new WebSocketRequestFactory().Get(context).Create();
                 await next(context);
             });
         }

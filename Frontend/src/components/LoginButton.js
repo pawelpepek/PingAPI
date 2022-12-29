@@ -2,13 +2,21 @@ import { socketClose } from "../hooks/socketClose"
 import classes from "./LoginButton.module.css"
 
 const LoginButton = props => {
-	const buttonText = props.login ? "Wyloguj" : "Zaloguj"
-	const classButton = `${classes.button} ${props.login && classes["button-on"]}`
+	const buttonText = !!props.token ? "Wyloguj" : "Zaloguj"
+	const classButton = `${classes.button} ${
+		!!props.token && classes["button-on"]
+	}`
 
 	return (
 		<button
 			className={classButton}
-			onClick={props.login ? socketClose : props.onStart}>
+			onClick={
+				!!props.token
+					? () => {
+							socketClose(props.token)
+					  }
+					: props.onStart
+			}>
 			{buttonText}
 		</button>
 	)
