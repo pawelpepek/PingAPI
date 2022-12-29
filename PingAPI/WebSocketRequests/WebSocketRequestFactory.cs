@@ -4,7 +4,7 @@ namespace PingAPI.WebSocketRequests
 {
     public class WebSocketRequestFactory
     {
-        public IWebSocketRequest Get(HttpContext context, AppContext appContext)
+        public IWebSocketRequest Get(HttpContext context, IAppContext appContext)
         {
             switch (context.Request.Path)
             {

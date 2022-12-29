@@ -8,7 +8,7 @@ namespace PingAPI.WebSocketRequests
 {
     public class ListenWebSocketRequest : WebSocketRequestTemplate
     {
-        public ListenWebSocketRequest(HttpContext context, AppContext appContext) : base(context, appContext)
+        public ListenWebSocketRequest(HttpContext context, IAppContext appContext) : base(context, appContext)
         {
         }
 

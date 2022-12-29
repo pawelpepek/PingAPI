@@ -1,6 +1,6 @@
 ﻿namespace PingAPI
 {
-    public class AppContext
+    public class AppContext : IAppContext
     {
         public bool Login { get; set; }
     }

@@ -7,9 +7,9 @@ namespace PingAPI.WebSocketRequests
     public abstract class WebSocketRequestTemplate : IWebSocketRequest
     {
         protected readonly HttpContext _context;
-        protected readonly AppContext _appContext;
+        protected readonly IAppContext _appContext;
 
-        public WebSocketRequestTemplate(HttpContext context, AppContext appContext)
+        public WebSocketRequestTemplate(HttpContext context, IAppContext appContext)
         {
             _context = context;
             _appContext = appContext;

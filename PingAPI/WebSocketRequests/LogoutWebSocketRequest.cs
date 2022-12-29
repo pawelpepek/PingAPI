@@ -6,7 +6,7 @@ namespace PingAPI.WebSocketRequests
 {
     public class LogoutWebSocketRequest : WebSocketRequestTemplate
     {
-        public LogoutWebSocketRequest(HttpContext context, AppContext appContext) : base(context, appContext)
+        public LogoutWebSocketRequest(HttpContext context, IAppContext appContext) : base(context, appContext)
         {
         }
 

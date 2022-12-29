@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PingAPI.WebSocketRequests;
@@ -10,12 +11,11 @@ namespace PingAPI
 {
     public class Startup
     {
-        private readonly AppContext _appContext = new();
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-  
+            services.AddSingleton<IAppContext, AppContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -33,7 +33,8 @@ namespace PingAPI
             app.UseWebSockets(wsOptions);
             app.Use(async (context, next) =>
             {
-                await new WebSocketRequestFactory().Get(context, _appContext).Create();
+                var appContext = context.RequestServices.GetService<IAppContext>();
+                await new WebSocketRequestFactory().Get(context, appContext).Create();
                 await next(context);
             });
         }
