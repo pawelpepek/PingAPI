@@ -1,7 +1,7 @@
 import classes from "./LoginButton.module.css"
 
 const LoginButton = props => {
-	const buttonText = props.running ? "Wyloguj" : "Zaloguj"
+	const buttonText = props.running ? "Stop" : "Start"
 	const classButton = `${classes.button} ${
 		props.running && classes["button-on"]
 	}`
